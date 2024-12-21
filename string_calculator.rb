@@ -5,18 +5,27 @@ class StringCalculator
 
     # If custom delimiter is provided
     if numbers.start_with?("//")
-      delimiter = numbers[2]  # Extract the custom delimiter
-      numbers = numbers[4..-1]
+      delimiter_section, numbers = numbers.split("\n", 2)
+      delimiter_part = delimiter_section[2..] 
+
+      if delimiter_part.start_with?("[") && delimiter_part.end_with?("]")
+        delimiters = delimiter_part.scan(/\[([^\]]+)\]/).flatten
+      else
+        delimiters = [delimiter_part]
+      end
+
+      delimiters.each do |delimiter|
+        numbers = numbers.gsub(delimiter, ",")
+      end
     else
-      delimiter = ","  # Default delimiter is comma
+      delimiters = [","]  # Default delimiter is comma
     end
 
-    # Replace newlines with the delimiter and split the numbers
-    numbers = numbers.gsub("\n", delimiter)
-    num_array = numbers.split(delimiter).map(&:to_i)
+    # Replace all newlines with commas and split numbers
+    numbers = numbers.gsub("\n", ",")
+    num_array = numbers.split(",").map(&:to_i)
 
     negatives = num_array.select { |n| n < 0 }
-    
     if negatives.any?
       raise "Negative numbers not allowed: #{negatives.join(', ')}"
     end
