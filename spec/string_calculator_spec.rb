@@ -37,5 +37,15 @@ RSpec.describe StringCalculator do
       calculator = StringCalculator.new
       expect(calculator.add("1,2\n3")).to eq(6) # Should return 1 + 2 + 3 = 6
     end
+
+    it 'returns the sum of numbers with a custom delimiter' do
+      calculator = StringCalculator.new
+      expect(calculator.add("//;\n1;2;3")).to eq(6)
+    end
+
+    it 'returns the sum of numbers with a custom delimiter and newlines' do
+      calculator = StringCalculator.new
+      expect(calculator.add("//;\n1;2\n3")).to eq(6)
+    end
   end
 end
