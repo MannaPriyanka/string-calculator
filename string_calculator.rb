@@ -2,14 +2,12 @@
 class StringCalculator
   def add(numbers)
     return 0 if numbers.empty?
-    return numbers.to_i if numbers.match(/^\d+$/)
+    
+    numbers = numbers.gsub("\n", ",").strip # Replace all newlines with commas 
     
     # Handle numbers separated by a comma
-    if numbers.include?(',')
-      num_array = numbers.split(',').map(&:to_i)
-      return num_array.sum
-    end
-
-    0
+    num_array = numbers.split(',').map(&:to_i)
+    
+    return num_array.sum
   end
 end

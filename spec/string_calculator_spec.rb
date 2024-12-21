@@ -27,5 +27,15 @@ RSpec.describe StringCalculator do
       calculator = StringCalculator.new
       expect(calculator.add("1,5,6")).to eq(12)
     end
+
+    it 'returns the sum of numbers with newline separators' do
+      calculator = StringCalculator.new
+      expect(calculator.add("1\n2\n3")).to eq(6) # Should return 1 + 2 + 3 = 6
+    end
+
+    it 'returns the sum of numbers with combination of comma and newline separators' do
+      calculator = StringCalculator.new
+      expect(calculator.add("1,2\n3")).to eq(6) # Should return 1 + 2 + 3 = 6
+    end
   end
 end
